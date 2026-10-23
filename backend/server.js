@@ -5,10 +5,23 @@ import connectDb from './libs/connectdb.js';
 import dns from 'dns'
 import cors from 'cors'
 import { clerkMiddleware } from '@clerk/express'
+import fs from 'fs'
+import path from 'path';
 
 dns.setServers(["1.1.1.1","8.8.8.8"])
 const PORT =process.env.PORT ;
 const frontend_url = process.env.frontend_url
+
+
+const publicDir = path.join(process.cwd(),'public')
+
+
+if(fs.existsSync(publicDir)){
+    app.use(express.static(publicDir))
+    app.get("/{*any}",(req,res,next)=>{
+        res.sendFile(path.join(publicDir,'index.html'),(err)=>next(err))
+    })
+}
 
 const app = express();
 app.use(express.json())

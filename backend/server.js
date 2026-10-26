@@ -7,6 +7,7 @@ import cors from 'cors'
 import { clerkMiddleware } from '@clerk/express'
 import fs from 'fs'
 import path from 'path';
+import ClerkWebhook from'./webhooks/Clerk.webhook.js'
 
 dns.setServers(["1.1.1.1","8.8.8.8"])
 const PORT =process.env.PORT ;
@@ -24,10 +25,13 @@ if(fs.existsSync(publicDir)){
 }
 
 const app = express();
+app.use('/api/webhooks',express.raw({type:'application/json'}),ClerkWebhook)
 app.use(express.json())
 app.use(cors())
 app.use(clerkMiddleware())
 app.use(cors({origin:frontend_url, credentials:true}))
+
+
 connectDb().then(() => {
     app.listen(PORT, () => {
         console.log(`Server running at ${PORT}`);

@@ -8,7 +8,9 @@ import { clerkMiddleware } from '@clerk/express'
 import fs from 'fs'
 import path from 'path';
 import ClerkWebhook from'./webhooks/Clerk.webhook.js'
+import authRoutes from './routes/auth.route.js';
 
+const app = express();
 dns.setServers(["1.1.1.1","8.8.8.8"])
 const PORT =process.env.PORT ;
 const frontend_url = process.env.frontend_url
@@ -24,10 +26,16 @@ if(fs.existsSync(publicDir)){
     })
 }
 
-const app = express();
-app.use('/api/webhooks',express.raw({type:'application/json'}),ClerkWebhook)
+app.use(
+  '/api/webhooks',
+  express.raw({ type: 'application/json' }),
+  ClerkWebhook
+);
+
+app.use('/api/auth',authRoutes)
+
 app.use(express.json())
-app.use(cors())
+
 app.use(clerkMiddleware())
 app.use(cors({origin:frontend_url, credentials:true}))
 

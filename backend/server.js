@@ -9,6 +9,7 @@ import fs from 'fs'
 import path from 'path';
 import ClerkWebhook from'./webhooks/Clerk.webhook.js'
 import authRoutes from './routes/auth.route.js';
+import messageRoutes from './routes/message.routes.js'
 
 const app = express();
 dns.setServers(["1.1.1.1","8.8.8.8"])
@@ -33,6 +34,7 @@ app.use(
 );
 
 app.use('/api/auth',authRoutes)
+app.use('/api/message',messageRoutes)
 
 app.use(express.json())
 

@@ -12,9 +12,9 @@ export const  upload = multer({
   const video = file.mimetype.startsWith("video/");
 
   if (image || video) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only images and videos are allowed!"), false);
+    cb(new Error('onlyimag and video upload allow'))
+    return
   }
+  cb(null,true)
    }
 })

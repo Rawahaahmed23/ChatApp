@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/express";
-import User from "../models/user.mode.js";
+import User from "../models/user.model.js";
 
 
 

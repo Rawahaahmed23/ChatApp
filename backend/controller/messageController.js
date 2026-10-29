@@ -2,6 +2,7 @@
 import User from "../models/user.model.js"
 import Message from'../models/message.model.js'
 import { hasImagekitConfig, uploadChatMedia } from "../libs/imagekit.js"
+import { getReciverSocketId } from "../libs/Socket.js"
 
 export async function getUserForSlidebar(req,res)  {
     try{
@@ -96,9 +97,11 @@ export async function SendMessage(req,res) {
       })
 
       await newMessage.save()
+      const reciverSocketId = getReciverSocketId()
       res.status(201).json(newMessage)
   }catch(error){
     console.log(error);
+    res.status(500).json({message:'internal Server Errror'})
     
   }
   

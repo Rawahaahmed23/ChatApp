@@ -10,8 +10,9 @@ import path from 'path';
 import ClerkWebhook from'./webhooks/Clerk.webhook.js'
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.routes.js'
+import { server,app } from './libs/Socket.js';
 
-const app = express();
+
 dns.setServers(["1.1.1.1","8.8.8.8"])
 const PORT =process.env.PORT ;
 const frontend_url = process.env.frontend_url
